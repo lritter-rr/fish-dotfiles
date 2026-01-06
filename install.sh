@@ -17,11 +17,19 @@ echo "plus lolfish" > "$HOME/.config/omf/bundle"
 echo "✨ Added lolfish to OMF bundle"
 
 # 3. Setup Fish Shell
-if ! grep -q "$(command -v fish)" /etc/shells; then
-  command -v fish | sudo tee -a /etc/shells
+CURRENT_SHELL=$(getent passwd "$USER" | cut -d: -f7)
+FISH_PATH=$(command -v fish)
+
+if [ "$CURRENT_SHELL" != "$FISH_PATH" ]; then
+  echo "🔧 Attempting to change shell to fish..."
+  # Use sudo -n (non-interactive) to fail gracefully if a password is required
+  if ! grep -q "$FISH_PATH" /etc/shells; then
+    sudo tee -a /etc/shells <<< "$FISH_PATH"
+  fi
+  sudo chsh -s "$FISH_PATH" "$USER" || echo "⚠️ Could not change shell automatically. Please run 'chsh -s $(which fish)' manually."
+else
+  echo "✅ Fish is already the default shell."
 fi
-chsh -s "$(command -v fish)"
-echo "🐟 Fish shell set as default shell."
 
 # 4. Install Oh My Fish (only if not already installed)
 if [ ! -f "$HOME/.local/share/omf/init.fish" ]; then
