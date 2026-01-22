@@ -108,7 +108,7 @@ fi
 
 # Check if the alias already exists to avoid duplication
 if ! grep -q 'alias gst' "$FISH_CONFIG"; then
-    echo 'alias gst="git status"' >> "$FISH_CONFIG"
+    echo 'alias gst="git status | lolcat"' >> "$FISH_CONFIG"
     echo "✅ Alias 'gst' added for 'git status'."
 else
     echo "✅ Alias 'gst' already exists."
