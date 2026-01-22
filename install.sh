@@ -95,7 +95,32 @@ else
 fi
 
 # --------------------------------------------------------
-# 5. Configure Aliases (NEW)
+# 5. Install lolcat (NEW)
+# --------------------------------------------------------
+echo "--- Lolcat Setup ---"
+
+# Check if lolcat is already installed
+if command -v lolcat &> /dev/null; then
+    echo "✅ lolcat is already installed."
+else
+    echo "🌈 Installing lolcat via Snap..."
+    # Attempt install using user provided command
+    if sudo snap install lolcat; then
+        echo "✅ lolcat installed successfully."
+    else
+        echo "⚠️  Snap installation failed. Attempting apt fallback..."
+        # Fallback for environments where snap might not be available (common in containers)
+        if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y lolcat
+            echo "✅ lolcat installed via apt."
+        else
+            echo "❌ Could not install lolcat. Snap failed and apt not found."
+        fi
+    fi
+fi
+
+# --------------------------------------------------------
+# 6. Configure Aliases
 # --------------------------------------------------------
 echo "🔗 Configuring aliases..."
 FISH_CONFIG="$HOME/.config/fish/config.fish"
@@ -110,6 +135,8 @@ fi
 if ! grep -q 'alias gst' "$FISH_CONFIG"; then
     echo 'alias gst="git status | lolcat"' >> "$FISH_CONFIG"
     echo "✅ Alias 'gst' added for 'git status'."
+    echo 'alias pwd="pwd | lolcat"' >> "$FISH_CONFIG"
+    echo 'alias l="ls -a | lolcat"' >> "$FISH_CONFIG"
 else
     echo "✅ Alias 'gst' already exists."
 fi
