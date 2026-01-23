@@ -160,7 +160,7 @@ if ! grep -q 'alias gf' "$FISH_CONFIG"; then
 fi
 
 if ! grep -q 'alias rcs' "$FISH_CONFIG"; then
-    echo 'alias rsc="rubocop (git diff --name-only --diff-filter=AM --cached) -A"' >> "$FISH_CONFIG"
+    echo 'alias rcs="rubocop (git diff --name-only --diff-filter=AM --cached) -A"' >> "$FISH_CONFIG"
 fi
 
 echo "🎉 Setup complete!"
