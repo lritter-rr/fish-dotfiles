@@ -143,7 +143,6 @@ fi
 
 if ! grep -q 'alias pw' "$FISH_CONFIG"; then
     echo 'alias pw="pwd | lolcat"' >> "$FISH_CONFIG"
-    echo 'alias l="ls -a | lolcat"' >> "$FISH_CONFIG"
 fi
 
 if ! grep -q 'alias l' "$FISH_CONFIG"; then
