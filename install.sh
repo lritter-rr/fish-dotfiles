@@ -141,4 +141,21 @@ else
     echo "✅ Alias 'gst' already exists."
 fi
 
+if ! grep -q 'alias pw' "$FISH_CONFIG"; then
+    echo 'alias pw="pwd | lolcat"' >> "$FISH_CONFIG"
+    echo 'alias l="ls -a | lolcat"' >> "$FISH_CONFIG"
+fi
+
+if ! grep -q 'alias l' "$FISH_CONFIG"; then
+    echo 'alias l="ls -a | lolcat"' >> "$FISH_CONFIG"
+fi
+
+if ! grep -q 'alias gpos' "$FISH_CONFIG"; then
+    echo 'alias gpos="git pull origin staging | lolcat"' >> "$FISH_CONFIG"
+fi
+
+if ! grep -q 'alias gf' "$FISH_CONFIG"; then
+    echo 'alias gf="git fetch | lolcat"' >> "$FISH_CONFIG"
+fi
+
 echo "🎉 Setup complete!"
