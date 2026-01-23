@@ -120,6 +120,42 @@ else
 fi
 
 # --------------------------------------------------------
+# Install TheFuck
+# --------------------------------------------------------
+echo "--- TheFuck Setup ---"
+
+# 1. Install the binary
+if command -v thefuck &> /dev/null; then
+    echo "✅ thefuck is already installed."
+else
+    echo "🤬 Installing thefuck..."
+    if command -v pip3 &> /dev/null; then
+        pip3 install thefuck --user
+        echo "✅ thefuck installed via pip3."
+    else
+        echo "❌ Error: pip3 is not installed. Cannot install thefuck."
+    fi
+fi
+
+# 2. Configure Fish (Idempotent check)
+FISH_CONFIG="$HOME/.config/fish/config.fish"
+
+# Ensure config file exists
+if [ ! -f "$FISH_CONFIG" ]; then
+    mkdir -p "$(dirname "$FISH_CONFIG")"
+    touch "$FISH_CONFIG"
+fi
+
+# Only add the line if it's not already there to avoid duplicates
+if ! grep -q "thefuck --alias | source" "$FISH_CONFIG"; then
+    echo "" >> "$FISH_CONFIG" # Ensure a newline exists
+    echo "thefuck --alias | source" >> "$FISH_CONFIG"
+    echo "🔗 Added 'thefuck --alias | source' to $FISH_CONFIG"
+else
+    echo "✅ thefuck is already configured in $FISH_CONFIG"
+fi
+
+# --------------------------------------------------------
 # 6. Configure Abbreviations (Clean Method)
 # --------------------------------------------------------
 echo "🔗 Configuring abbreviations..."
