@@ -148,10 +148,10 @@ if not type -q fzf
         echo "fzf installed successfully."
     else
         echo "Error: fzf failed to install."
-    end
+    fi
 else
     echo "fzf is already installed, skipping."
-end
+fi
 
 # --------------------------------------------------------
 # Install claude CLI
