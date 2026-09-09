@@ -138,13 +138,13 @@ else
 fi
 
 # Install fzf if it is not found in the current PATH
-if not type -q fzf
+if ! command -v fzf >/dev/null 2>&1; then
     echo "Installing fzf..."
     sudo apt update
     sudo apt install -y fzf
     
     # Verify installation succeeded
-    if type -q fzf
+    if command -v fzf >/dev/null 2>&1; then
         echo "fzf installed successfully."
     else
         echo "Error: fzf failed to install."
